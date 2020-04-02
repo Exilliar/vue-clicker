@@ -7,10 +7,15 @@
   <div id="main-content">
     <score :clicks="clicks"></score>
     <main-button @clicked="onMainButtonClick()"></main-button>
+    <button @click="stopAutoClick()">Stop auto clicking</button>
   </div>
  </div>
 </template>
 <script>
+
+// import axios from 'axios';
+
+import config from './config';
 
 import Score from './components/Score.vue';
 import MainButton from './components/MainButton.vue';
@@ -25,29 +30,8 @@ export default {
   },
   data() {
     return {
-      clicks: 5,
-      items: [{
-          id: 0,
-          name: "Item 1",
-          total: 0,
-          clickValue: 1,
-          cost: 50,
-          unlocked: true
-        }, {
-          id: 1,
-          name: "Item 2",
-          total: 0,
-          clickValue: 1,
-          cost: 100,
-          unlocked: true
-        }, {
-          id: 2,
-          name: "Item 3",
-          total: 0,
-          clickValue: 1,
-          cost: 150,
-          unlocked: false
-      }]
+      clicks: 500,
+      items: config.items
     }
   },
   methods: {
@@ -59,9 +43,37 @@ export default {
       if (this.clicks >= item.cost) {
         item.total ++;
         this.clicks -= item.cost;
+        if (item.total-1 === 0) item.intervalID = this.autoIncClick(item);
+
+        this.items.forEach((item, i) => {
+          if (i != 0) {
+            if (this.items[i-1].total >= item.unlockAt) item.unlocked = true;
+          }
+        });
       } else console.log("Cannot afford");
+    },
+    autoIncClick(item) {
+      return window.setInterval(() => {
+        console.log("go", item.name);
+        this.clicks += item.clickValue * item.total;
+      }, item.clickTime*1000);
+    },
+    stopAutoClick() {
+      this.items.forEach(i => {
+        window.clearInterval(i.intervalID);
+      });
     }
-  }
+  },
+  beforeDestroy() {
+    this.stopAutoClick();
+  },
+  // mounted() {
+  //   axios.get('http://localhost:3000/items')
+  //   .then(data => {
+  //     console.log("data:", data);
+  //     this.items = data.data;
+  //   })
+  // }
 }
 </script>
 

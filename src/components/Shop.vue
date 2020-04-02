@@ -1,10 +1,13 @@
 <template>
-    <div class="header">
+    <div class="header" v-if="items">
         <template v-for="item in items">
             <div :key="item.name" v-if="item.unlocked">
                 <button @click="purchaseItem(item.id)">{{item.name}}</button>
                 <p>Cost: {{item.cost}}</p>
+                <p>Click value: {{item.clickValue}}</p>
+                <p>Time to click: {{item.clickTime}} second(s)</p>
                 <p>Purchased: {{item.total}}</p>
+                <p>Current clicks per sec: {{(item.clickValue/item.clickTime)*item.total}}</p>
             </div>
         </template>
     </div>
