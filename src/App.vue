@@ -7,14 +7,10 @@
   <div id="main-content">
     <score :clicks="clicks"></score>
     <main-button @clicked="onMainButtonClick()"></main-button>
-    <button @click="stopAutoClick()">Stop auto clicking</button>
   </div>
  </div>
 </template>
 <script>
-
-// import axios from 'axios';
-
 import config from './config';
 
 import Score from './components/Score.vue';
@@ -54,7 +50,6 @@ export default {
     },
     autoIncClick(item) {
       return window.setInterval(() => {
-        console.log("go", item.name);
         this.clicks += item.clickValue * item.total;
       }, item.clickTime*1000);
     },
@@ -66,14 +61,7 @@ export default {
   },
   beforeDestroy() {
     this.stopAutoClick();
-  },
-  // mounted() {
-  //   axios.get('http://localhost:3000/items')
-  //   .then(data => {
-  //     console.log("data:", data);
-  //     this.items = data.data;
-  //   })
-  // }
+  }
 }
 </script>
 
