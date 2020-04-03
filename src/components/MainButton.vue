@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="handleClick()">Click this button!</button>
+    <md-button class="md-raised md-primary md-round" @click="handleClick()">Click this button!</md-button>
   </div>
 </template>
 

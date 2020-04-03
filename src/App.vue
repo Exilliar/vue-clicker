@@ -7,8 +7,9 @@
   <div id="main-content">
     <score :clicks="clicks"></score>
     <main-button @clicked="onMainButtonClick()"></main-button>
-    <button @click="stopAutoClick()">Stop auto clicking</button>
+    <md-button class="md-raised md-primary" @click="stopAutoClick()">Stop auto clicking</md-button>
   </div>
+  <upgrades></upgrades>
  </div>
 </template>
 <script>
@@ -20,13 +21,15 @@ import config from './config';
 import Score from './components/Score.vue';
 import MainButton from './components/MainButton.vue';
 import Shop from './components/Shop.vue';
+import Upgrades from './components/Upgrades.vue';
 
 export default {
   name: 'App',
   components: {
     Score,
     MainButton,
-    Shop
+    Shop,
+    Upgrades
   },
   data() {
     return {
