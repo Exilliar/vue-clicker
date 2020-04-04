@@ -1,6 +1,7 @@
 <template>
   <div>
     <p>Clicked {{clicks}} times</p>
+    <p>per second: {{Math.round(cps)}}</p>
   </div>
 </template>
 
@@ -8,7 +9,8 @@
 export default {
   name: 'Score',
   props: {
-    clicks: Number
+    clicks: Number,
+    cps: Number
   }
 }
 </script>

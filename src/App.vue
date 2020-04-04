@@ -4,12 +4,11 @@
         :items="items"
         @purchaseItem="purchaseItem"
     ></shop>
-  <div id="main-content">
-    <score :clicks="clicks"></score>
-    <main-button @clicked="onMainButtonClick()"></main-button>
-    <md-button class="md-raised md-primary" @click="stopAutoClick()">Stop auto clicking</md-button>
-  </div>
-  <upgrades></upgrades>
+    <div id="main-content">
+      <score :clicks="clicks" :cps="cps"></score>
+      <main-button @clicked="onMainButtonClick()"></main-button>
+    </div>
+    <upgrades></upgrades>
  </div>
 </template>
 <script>
@@ -34,7 +33,10 @@ export default {
   data() {
     return {
       clicks: 500,
-      items: config.items
+      cps: 0, // clicks per second
+      items: config.items,
+      upgrades: config.upgrades,
+      cpsIntervalID: null
     }
   },
   methods: {
@@ -45,8 +47,12 @@ export default {
       const item = this.items[id];
       if (this.clicks >= item.cost) {
         item.total ++;
+
         this.clicks -= item.cost;
-        if (item.total-1 === 0) item.intervalID = this.autoIncClick(item);
+        this.cps += item.clickValue/item.clickTime;
+
+        window.clearInterval(this.cpsIntervalID);
+        this.cpsIntervalID = this.updateClicks();
 
         this.items.forEach((item, i) => {
           if (i != 0) {
@@ -55,33 +61,23 @@ export default {
         });
       } else console.log("Cannot afford");
     },
-    autoIncClick(item) {
+    updateClicks() {
+      const time = 1000/this.cps;
+      console.log("time:", time);
+      console.log(1000/1);
+
       return window.setInterval(() => {
-        console.log("go", item.name);
-        this.clicks += item.clickValue * item.total;
-      }, item.clickTime*1000);
-    },
-    stopAutoClick() {
-      this.items.forEach(i => {
-        window.clearInterval(i.intervalID);
-      });
+        this.clicks ++;
+      }, time);
     }
-  },
-  beforeDestroy() {
-    this.stopAutoClick();
-  },
-  // mounted() {
-  //   axios.get('http://localhost:3000/items')
-  //   .then(data => {
-  //     console.log("data:", data);
-  //     this.items = data.data;
-  //   })
-  // }
+  }
 }
 </script>
 
 <style>
 #app {
+  display: flex;
+  justify-content: space-around;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -90,5 +86,9 @@ export default {
 #main-content {
   text-align: center;
   margin-top: 60px;
+}
+.page {
+    height: 100vh;
+    overflow-y: scroll;
 }
 </style>
