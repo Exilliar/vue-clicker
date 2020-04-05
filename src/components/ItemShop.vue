@@ -1,12 +1,13 @@
 <template>
     <div class="page">
-        <h1 class="centre">Shop</h1>
+        <h1 class="centre">Item Shop</h1>
         <div class="header" v-if="items">
             <template v-for="item in items">
                 <div :key="item.name" v-if="item.unlocked" class="item-info">
                     <md-button
                         class="md-raised md-primary button-style"
-                        @click="purchaseItem(item.id)"
+                        @click="purchaseItem(item)"
+                        :disabled="item.cost > clicks"
                     >
                         {{item.name}}
                     </md-button>
@@ -23,39 +24,20 @@
 
 <script>
 export default {
-  name: 'Shop',
+  name: 'ItemShop',
   props: {
-      items: Array
+      items: Array,
+      clicks: Number
   },
   methods: {
-      purchaseItem(id) {
-          this.$emit('purchaseItem',id);
-      }
+      purchaseItem(item) { this.$emit('purchaseItem',item); }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.header {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-}
 .centre {
     text-align: center;
-}
-.item-info {
-    border: 1px solid #ccc;
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-bottom: 1em;
-    margin-right: 0.5em;
-    padding: 0.5em;
-}
-.button-style {
-    border-radius: 16px;
 }
 </style>

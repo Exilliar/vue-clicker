@@ -1,14 +1,18 @@
 <template>
  <div id="app">
-    <shop
+    <item-shop
         :items="items"
+        :clicks="clicks"
         @purchaseItem="purchaseItem"
-    ></shop>
-    <div id="main-content">
-      <score :clicks="clicks" :cps="cps"></score>
-      <main-button @clicked="onMainButtonClick()"></main-button>
+    />
+    <div id="main-content" class="page">
+      <score :clicks="clicks" :cps="cps"/>
+      <main-button @clicked="onMainButtonClick()"/>
     </div>
-    <upgrades></upgrades>
+    <upgrade-shop
+        :upgrades="upgrades"
+        @purchaseUpgrade="purchaseUpgrade"
+    />
  </div>
 </template>
 <script>
@@ -19,16 +23,16 @@ import config from './config';
 
 import Score from './components/Score.vue';
 import MainButton from './components/MainButton.vue';
-import Shop from './components/Shop.vue';
-import Upgrades from './components/Upgrades.vue';
+import ItemShop from './components/ItemShop.vue';
+import UpgradeShop from './components/UpgradeShop.vue';
 
 export default {
   name: 'App',
   components: {
     Score,
     MainButton,
-    Shop,
-    Upgrades
+    ItemShop,
+    UpgradeShop
   },
   data() {
     return {
@@ -36,15 +40,15 @@ export default {
       cps: 0, // clicks per second
       items: config.items,
       upgrades: config.upgrades,
-      cpsIntervalID: null
+      cpsIntervalID: null,
+      mainButtonClickValue: 1, //clicks per click
     }
   },
   methods: {
     onMainButtonClick() {
-      this.clicks ++;
+      this.clicks += this.mainButtonClickValue;
     },
-    purchaseItem(id) {
-      const item = this.items[id];
+    purchaseItem(item) {
       if (this.clicks >= item.cost) {
         item.total ++;
 
@@ -61,10 +65,17 @@ export default {
         });
       } else console.log("Cannot afford");
     },
+    purchaseUpgrade(upgrade) {
+      upgrade.total ++;
+      upgrade.disabled = upgrade.total >= upgrade.limit;
+
+      this.clicks -= upgrade.cost;
+
+      if (upgrade.upgradeId === -1) this.mainButtonClickValue += upgrade.increase;
+      else this.items[upgrade.upgradeId].clickValue += upgrade.increase;
+    },
     updateClicks() {
       const time = 1000/this.cps;
-      console.log("time:", time);
-      console.log(1000/1);
 
       return window.setInterval(() => {
         this.clicks ++;
@@ -82,13 +93,33 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  overflow-y: hidden;
 }
 #main-content {
   text-align: center;
-  margin-top: 60px;
+  /* margin-top: 60px; */
 }
 .page {
     height: 100vh;
+    width: 33vw;
     overflow-y: scroll;
+}
+.header {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+.item-info {
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 1em;
+    margin-right: 0.5em;
+    padding: 0.5em;
+}
+.button-style {
+    border-radius: 16px;
 }
 </style>

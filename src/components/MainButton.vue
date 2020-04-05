@@ -8,9 +8,7 @@
 export default {
   name: 'MainButton',
   methods: {
-      handleClick() {
-          this.$emit('clicked');
-      }
+    handleClick() { this.$emit('clicked'); }
   }
 }
 </script>

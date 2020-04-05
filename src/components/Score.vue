@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p>Clicked {{clicks}} times</p>
-    <p>per second: {{Math.round(cps)}}</p>
+    <p>Clicked {{ clicks.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",") }} times</p>
+    <p>per second: {{Math.round(cps).toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",")}}</p>
   </div>
 </template>
 
