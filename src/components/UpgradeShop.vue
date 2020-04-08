@@ -4,13 +4,13 @@
       <div class="header" v-if="upgrades">
         <template v-for="upgrade in upgrades">
           <div :key="upgrade.id" class="item-info" v-if="upgrade.unlocked">
-            <md-button
+            <v-btn
               class="md-raised md-primary button-style"
               :disabled="upgrade.disabled"
               @click="purchaseUpgrade(upgrade)"
             >
               {{upgrade.name}}
-            </md-button>
+            </v-btn>
             <p>{{upgrade.description}}</p>
           </div>
         </template>

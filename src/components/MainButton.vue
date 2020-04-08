@@ -1,7 +1,14 @@
 <template>
-  <div>
-    <md-button class="md-raised md-accent round" @click="handleClick()">Click this button!</md-button>
-  </div>
+  <v-container>
+    <v-btn
+      color="red"
+      class="round"
+      fab
+      height="15em"
+      width="15em"
+      @click="handleClick()"
+    >Click this button!</v-btn>
+  </v-container>
 </template>
 
 <script>

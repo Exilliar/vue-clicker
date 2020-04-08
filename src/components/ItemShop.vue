@@ -4,13 +4,13 @@
         <div class="header" v-if="items">
             <template v-for="item in items">
                 <div :key="item.name" v-if="item.unlocked" class="item-info">
-                    <md-button
+                    <v-btn
                         class="md-raised md-primary button-style"
                         @click="purchaseItem(item)"
                         :disabled="item.cost > clicks"
                     >
                         {{item.name}}
-                    </md-button>
+                    </v-btn>
                     <p>Cost: {{item.cost}}</p>
                     <p>Click value: {{item.clickValue}}</p>
                     <p>Time to click: {{item.clickTime}} second(s)</p>

@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <v-content>
     <p>Clicked {{ clicks.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",") }} times</p>
     <p>per second: {{Math.round(cps).toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",")}}</p>
-  </div>
+  </v-content>
 </template>
 
 <script>
