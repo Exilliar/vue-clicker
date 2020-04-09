@@ -49,8 +49,9 @@ export default {
       cps: 0, // clicks per second
       items: config.items,
       upgrades: config.upgrades,
-      cpsIntervalID: [],
+      cpsIntervalID: -1,
       mainButtonClickValue: 1, //clicks per manual click
+      purchasedItems: []
     }
   },
   methods: {
@@ -63,6 +64,7 @@ export default {
 
         this.clicks -= item.cost;
         this.cps += item.clickValue/item.clickTime;
+        this.purchasedItems.push(item);
 
         this.updateClicks();
 
@@ -83,31 +85,22 @@ export default {
       else this.items[upgrade.upgradeId].clickValue += upgrade.increase;
     },
     updateClicks() {
-      // this.cpsIntervalID.forEach(c => window.clearInterval(c));
+      if (this.cpsIntervalID !== -1) window.clearInterval(this.cpsIntervalID);
 
-      // this.cpsIntervalID = [];
+      let time = 1000/this.cps;
 
-      // let currentcps = this.cps;
+      const minTime = 10;
 
-      // while (currentcps > 100) {
-      //   console.log("create timer:", currentcps);
+      let addClicks;
 
-      //   const time = 10;
+      if (time < minTime) {
+        time = minTime;
+        addClicks = this.cps/100;
+      } else addClicks = 1;
 
-      //   this.cpsIntervalID.push(
-      //         window.setInterval(() => {
-      //       this.clicks ++;
-      //     }, time)
-      //   );
-
-      //   currentcps -= 100;
-      // }
-
-      // const time = 1000/currentcps;
-
-      // window.setInterval(() => {
-      //   this.clicks ++;
-      // }, time);
+      this.cpsIntervalID = window.setInterval(() => {
+        this.clicks += addClicks;
+      }, time);
     }
   }
 }
