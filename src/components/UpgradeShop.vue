@@ -1,21 +1,30 @@
 <template>
-  <div class="page">
-      <h1 class="centre">Upgrades Shop</h1>
+  <v-content>
+      <h1 class="text-center">Upgrades Shop</h1>
       <div class="header" v-if="upgrades">
         <template v-for="upgrade in upgrades">
-          <div :key="upgrade.id" class="item-info" v-if="upgrade.unlocked">
-            <v-btn
-              class="md-raised md-primary button-style"
-              :disabled="upgrade.disabled"
-              @click="purchaseUpgrade(upgrade)"
-            >
-              {{upgrade.name}}
-            </v-btn>
-            <p>{{upgrade.description}}</p>
-          </div>
+          <v-card
+            :key="upgrade.id"
+            v-if="upgrade.unlocked"
+            raised
+            :style="'margin: 2em;'"
+          >
+            <v-card-title>{{upgrade.name}}</v-card-title>
+            <v-card-text>{{upgrade.description}}</v-card-text>
+            <v-card-actions>
+              <v-btn
+                color="primary"
+                class="md-raised md-primary button-style"
+                :disabled="upgrade.disabled"
+                @click="purchaseUpgrade(upgrade)"
+              >
+                Buy
+              </v-btn>
+            </v-card-actions>
+          </v-card>
         </template>
       </div>
-  </div>
+  </v-content>
 </template>
 
 <script>

@@ -2,7 +2,7 @@
   <v-app>
     <v-content>
       <v-row>
-        <v-col cols="4">
+        <v-col cols="4" style="height:100vh" class="overflow-y-auto">
           <item-shop
             :items="items"
             :clicks="clicks"
@@ -15,11 +15,11 @@
             <main-button @clicked="onMainButtonClick()"/>
           </div>
         </v-col>
-        <v-col cols="4">
-        <upgrade-shop
-          :upgrades="upgrades"
-          @purchaseUpgrade="purchaseUpgrade"
-        />
+        <v-col cols="4" style="height:100vh" class="overflow-y-auto">
+          <upgrade-shop
+            :upgrades="upgrades"
+            @purchaseUpgrade="purchaseUpgrade"
+          />
         </v-col>
       </v-row>
     </v-content>
@@ -63,7 +63,6 @@ export default {
         this.clicks -= item.cost;
         this.cps += item.clickValue/item.clickTime;
 
-        window.clearInterval(this.cpsIntervalID);
         this.cpsIntervalID = this.updateClicks();
 
         this.items.forEach((item, i) => {
@@ -83,7 +82,11 @@ export default {
       else this.items[upgrade.upgradeId].clickValue += upgrade.increase;
     },
     updateClicks() {
+      window.clearInterval(this.cpsIntervalID);
+
       const time = 1000/this.cps;
+
+      console.log("time:", time);
 
       return window.setInterval(() => {
         this.clicks ++;
