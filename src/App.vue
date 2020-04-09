@@ -27,6 +27,7 @@
 </template>
 <script>
 import config from './config';
+
 import Score from './components/Score.vue';
 import MainButton from './components/MainButton.vue';
 import ItemShop from './components/ItemShop.vue';
@@ -48,8 +49,8 @@ export default {
       cps: 0, // clicks per second
       items: config.items,
       upgrades: config.upgrades,
-      cpsIntervalID: null,
-      mainButtonClickValue: 1, //clicks per click
+      cpsIntervalID: [],
+      mainButtonClickValue: 1, //clicks per manual click
     }
   },
   methods: {
@@ -63,7 +64,7 @@ export default {
         this.clicks -= item.cost;
         this.cps += item.clickValue/item.clickTime;
 
-        this.cpsIntervalID = this.updateClicks();
+        this.updateClicks();
 
         this.items.forEach((item, i) => {
           if (i != 0) {
@@ -82,15 +83,31 @@ export default {
       else this.items[upgrade.upgradeId].clickValue += upgrade.increase;
     },
     updateClicks() {
-      window.clearInterval(this.cpsIntervalID);
+      // this.cpsIntervalID.forEach(c => window.clearInterval(c));
 
-      const time = 1000/this.cps;
+      // this.cpsIntervalID = [];
 
-      console.log("time:", time);
+      // let currentcps = this.cps;
 
-      return window.setInterval(() => {
-        this.clicks ++;
-      }, time);
+      // while (currentcps > 100) {
+      //   console.log("create timer:", currentcps);
+
+      //   const time = 10;
+
+      //   this.cpsIntervalID.push(
+      //         window.setInterval(() => {
+      //       this.clicks ++;
+      //     }, time)
+      //   );
+
+      //   currentcps -= 100;
+      // }
+
+      // const time = 1000/currentcps;
+
+      // window.setInterval(() => {
+      //   this.clicks ++;
+      // }, time);
     }
   }
 }
