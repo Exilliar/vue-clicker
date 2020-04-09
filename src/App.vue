@@ -1,30 +1,37 @@
 <template>
- <div id="app">
-    <item-shop
-        :items="items"
-        :clicks="clicks"
-        @purchaseItem="purchaseItem"
-    />
-    <div id="main-content" class="page">
-      <score :clicks="clicks" :cps="cps"/>
-      <main-button @clicked="onMainButtonClick()"/>
-    </div>
-    <upgrade-shop
-        :upgrades="upgrades"
-        @purchaseUpgrade="purchaseUpgrade"
-    />
- </div>
+  <v-app>
+    <v-content>
+      <v-row>
+        <v-col cols="4" style="height:100vh" class="overflow-y-auto">
+          <item-shop
+            :items="items"
+            :clicks="clicks"
+            @purchaseItem="purchaseItem"
+          />
+        </v-col>
+        <v-col cols="4" class="text-center">
+          <div id="main-content" class="page">
+            <score :clicks="clicks" :cps="cps"/>
+            <main-button @clicked="onMainButtonClick()"/>
+          </div>
+        </v-col>
+        <v-col cols="4" style="height:100vh" class="overflow-y-auto">
+          <upgrade-shop
+            :upgrades="upgrades"
+            @purchaseUpgrade="purchaseUpgrade"
+          />
+        </v-col>
+      </v-row>
+    </v-content>
+  </v-app>
 </template>
 <script>
-
-// import axios from 'axios';
-
 import config from './config';
-
 import Score from './components/Score.vue';
 import MainButton from './components/MainButton.vue';
 import ItemShop from './components/ItemShop.vue';
 import UpgradeShop from './components/UpgradeShop.vue';
+// import HelloWorld from './components/HelloWorld.vue';
 
 export default {
   name: 'App',
@@ -32,7 +39,8 @@ export default {
     Score,
     MainButton,
     ItemShop,
-    UpgradeShop
+    UpgradeShop,
+    // HelloWorld
   },
   data() {
     return {
@@ -55,7 +63,6 @@ export default {
         this.clicks -= item.cost;
         this.cps += item.clickValue/item.clickTime;
 
-        window.clearInterval(this.cpsIntervalID);
         this.cpsIntervalID = this.updateClicks();
 
         this.items.forEach((item, i) => {
@@ -75,7 +82,11 @@ export default {
       else this.items[upgrade.upgradeId].clickValue += upgrade.increase;
     },
     updateClicks() {
+      window.clearInterval(this.cpsIntervalID);
+
       const time = 1000/this.cps;
+
+      console.log("time:", time);
 
       return window.setInterval(() => {
         this.clicks ++;
@@ -85,41 +96,3 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  display: flex;
-  justify-content: space-around;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  overflow-y: hidden;
-}
-#main-content {
-  text-align: center;
-  /* margin-top: 60px; */
-}
-.page {
-    height: 100vh;
-    width: 33vw;
-    overflow-y: scroll;
-}
-.header {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-}
-.item-info {
-    border: 1px solid #ccc;
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-bottom: 1em;
-    margin-right: 0.5em;
-    padding: 0.5em;
-}
-.button-style {
-    border-radius: 16px;
-}
-</style>
