@@ -27,6 +27,7 @@
 </template>
 <script>
 import config from './config';
+
 import Score from './components/Score.vue';
 import MainButton from './components/MainButton.vue';
 import ItemShop from './components/ItemShop.vue';
@@ -48,8 +49,9 @@ export default {
       cps: 0, // clicks per second
       items: config.items,
       upgrades: config.upgrades,
-      cpsIntervalID: null,
-      mainButtonClickValue: 1, //clicks per click
+      cpsIntervalID: -1,
+      mainButtonClickValue: 1, //clicks per manual click
+      purchasedItems: []
     }
   },
   methods: {
@@ -62,8 +64,9 @@ export default {
 
         this.clicks -= item.cost;
         this.cps += item.clickValue/item.clickTime;
+        this.purchasedItems.push(item);
 
-        this.cpsIntervalID = this.updateClicks();
+        this.updateClicks();
 
         this.items.forEach((item, i) => {
           if (i != 0) {
@@ -82,14 +85,21 @@ export default {
       else this.items[upgrade.upgradeId].clickValue += upgrade.increase;
     },
     updateClicks() {
-      window.clearInterval(this.cpsIntervalID);
+      if (this.cpsIntervalID !== -1) window.clearInterval(this.cpsIntervalID);
 
-      const time = 1000/this.cps;
+      let time = 1000/this.cps;
 
-      console.log("time:", time);
+      const minTime = 10;
 
-      return window.setInterval(() => {
-        this.clicks ++;
+      let addClicks;
+
+      if (time < minTime) {
+        time = minTime;
+        addClicks = this.cps/100;
+      } else addClicks = 1;
+
+      this.cpsIntervalID = window.setInterval(() => {
+        this.clicks += addClicks;
       }, time);
     }
   }
