@@ -18,6 +18,7 @@
         <v-col cols="4" style="height:100vh" class="overflow-y-auto">
           <upgrade-shop
             :upgrades="upgrades"
+            :clicks="clicks"
             @purchaseUpgrade="purchaseUpgrade"
           />
         </v-col>
@@ -45,7 +46,7 @@ export default {
   },
   data() {
     return {
-      clicks: 500,
+      clicks: 0,
       cps: 0, // clicks per second
       items: config.items,
       upgrades: config.upgrades,
@@ -63,10 +64,9 @@ export default {
         item.total ++;
 
         this.clicks -= item.cost;
-        this.cps += item.clickValue/item.clickTime;
+        // this.cps += item.clickValue/item.clickTime;
         this.purchasedItems.push(item);
-
-        this.updateClicks();
+        this.updateCps();
 
         this.items.forEach((item, i) => {
           if (i != 0) {
@@ -82,10 +82,19 @@ export default {
       this.clicks -= upgrade.cost;
 
       if (upgrade.upgradeId === -1) this.mainButtonClickValue += upgrade.increase;
-      else this.items[upgrade.upgradeId].clickValue += upgrade.increase;
+      else {
+        this.items[upgrade.upgradeId].clickValue += upgrade.increase;
+        this.updateCps();
+      }
+    },
+    updateCps() {
+      this.cps = this.purchasedItems.map(i => i.clickValue/i.clickTime).reduce((a,b) => a + b, 0);
+
+      this.updateClicks();
     },
     updateClicks() {
       if (this.cpsIntervalID !== -1) window.clearInterval(this.cpsIntervalID);
+      if (this.cps === 0) return;
 
       let time = 1000/this.cps;
 

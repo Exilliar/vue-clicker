@@ -10,12 +10,17 @@
             :style="'margin: 2em;'"
           >
             <v-card-title>{{upgrade.name}}</v-card-title>
-            <v-card-text>{{upgrade.description}}</v-card-text>
+            <v-card-subtitle>{{upgrade.description}}</v-card-subtitle>
+            <v-card-text>
+              <p>Cost: {{upgrade.cost}}</p>
+              <p>Currently bought: {{upgrade.total}}</p>
+              <p>Limit: {{upgrade.limit}}</p>
+            </v-card-text>
             <v-card-actions>
               <v-btn
                 color="primary"
                 class="md-raised md-primary button-style"
-                :disabled="upgrade.disabled"
+                :disabled="upgrade.disabled || upgrade.cost > clicks"
                 @click="purchaseUpgrade(upgrade)"
               >
                 Buy
@@ -31,10 +36,14 @@
 export default {
   name: 'UpgradeShop',
   props: {
-    upgrades: Array
+    upgrades: Array,
+    clicks: Number
   },
   methods: {
     purchaseUpgrade(upgrade) { this.$emit('purchaseUpgrade',upgrade); }
+  },
+  mounted() {
+    console.log("clicks:", this.clicks);
   }
 }
 </script>
