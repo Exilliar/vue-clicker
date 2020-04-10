@@ -8,8 +8,9 @@ var config = {
         clickTime: 1,
         cost: 50,
         unlocked: true,
-        unlockAt: 5,
-        intervalID: undefined
+        unlockAt: 0,
+        intervalID: undefined,
+        increaseMulti: 1.1, // How much the price increases (multiply) by on each purchase
       }, {
         id: 1,
         name: "Item 2",
@@ -19,8 +20,9 @@ var config = {
         clickTime: 2,
         cost: 100,
         unlocked: true,
-        unlockAt: 5,
-        intervalID: undefined
+        unlockAt: 0,
+        intervalID: undefined,
+        increaseMulti: 1.1,
       }, {
         id: 2,
         name: "Item 3",
@@ -31,7 +33,8 @@ var config = {
         cost: 150,
         unlocked: false,
         unlockAt: 5, // the number of the previous item required before this item is unlocked
-        intervalID: undefined
+        intervalID: undefined,
+        increaseMulti: 1.1,
     }],
     upgrades: [{
       id: 0,
@@ -44,6 +47,7 @@ var config = {
       cost: 10,
       disabled: false,
       total: 0,
+      increaseMulti: 1.1,
     }, {
       id: 1,
       name: "Item 1 upgrade",
@@ -55,10 +59,11 @@ var config = {
       cost: 20,
       disabled: false,
       total: 0,
+      increaseMulti: 1.1,
     }, {
       id: 2,
       name: "Item 2 upgrade",
-      description: "Upgrades the clicks per second for Item 2 by 1",
+      description: "Upgrades the clicks per second for Item 2 by 2",
       increase: 2,
       upgradeId: 1, // -1 for cursor
       unlocked: true,
@@ -66,10 +71,11 @@ var config = {
       cost: 40,
       disabled: false,
       total: 0,
+      increaseMulti: 1.1,
     }, {
       id: 3,
       name: "Item 3 upgrade",
-      description: "Upgrades the clicks per second for Item 3 by 1",
+      description: "Upgrades the clicks per second for Item 3 by 4",
       increase: 4,
       upgradeId: 2, // -1 for cursor
       unlocked: true,
@@ -77,6 +83,7 @@ var config = {
       cost: 80,
       disabled: false,
       total: 0,
+      increaseMulti: 1.1,
     }]
 }
 

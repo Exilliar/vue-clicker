@@ -33,7 +33,6 @@ import Score from './components/Score.vue';
 import MainButton from './components/MainButton.vue';
 import ItemShop from './components/ItemShop.vue';
 import UpgradeShop from './components/UpgradeShop.vue';
-// import HelloWorld from './components/HelloWorld.vue';
 
 export default {
   name: 'App',
@@ -42,11 +41,10 @@ export default {
     MainButton,
     ItemShop,
     UpgradeShop,
-    // HelloWorld
   },
   data() {
     return {
-      clicks: 0,
+      clicks: 90,
       cps: 0, // clicks per second
       items: config.items,
       upgrades: config.upgrades,
@@ -64,22 +62,28 @@ export default {
         item.total ++;
 
         this.clicks -= item.cost;
-        // this.cps += item.clickValue/item.clickTime;
         this.purchasedItems.push(item);
         this.updateCps();
 
-        this.items.forEach((item, i) => {
-          if (i != 0) {
-            if (this.items[i-1].total >= item.unlockAt) item.unlocked = true;
-          }
-        });
+        this.updatePrice(item);
+
+        this.unlockItems();
       } else console.log("Cannot afford");
+    },
+    unlockItems() {
+      this.items.forEach((item, i) => {
+        if (i != 0) {
+          if (this.items[i-1].total >= item.unlockAt) item.unlocked = true;
+        }
+      });
     },
     purchaseUpgrade(upgrade) {
       upgrade.total ++;
       upgrade.disabled = upgrade.total >= upgrade.limit;
 
       this.clicks -= upgrade.cost;
+
+      this.updatePrice(upgrade);
 
       if (upgrade.upgradeId === -1) this.mainButtonClickValue += upgrade.increase;
       else {
@@ -110,6 +114,9 @@ export default {
       this.cpsIntervalID = window.setInterval(() => {
         this.clicks += addClicks;
       }, time);
+    },
+    updatePrice(object) {
+      object.cost *= object.increaseMulti;
     }
   }
 }

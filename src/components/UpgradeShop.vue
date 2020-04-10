@@ -12,7 +12,7 @@
             <v-card-title>{{upgrade.name}}</v-card-title>
             <v-card-subtitle>{{upgrade.description}}</v-card-subtitle>
             <v-card-text>
-              <p>Cost: {{upgrade.cost}}</p>
+              <p>Cost: {{Math.round(upgrade.cost)}}</p>
               <p>Currently bought: {{upgrade.total}}</p>
               <p>Limit: {{upgrade.limit}}</p>
             </v-card-text>
@@ -41,9 +41,6 @@ export default {
   },
   methods: {
     purchaseUpgrade(upgrade) { this.$emit('purchaseUpgrade',upgrade); }
-  },
-  mounted() {
-    console.log("clicks:", this.clicks);
   }
 }
 </script>

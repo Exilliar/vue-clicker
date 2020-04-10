@@ -11,7 +11,7 @@
                 >
                     <v-card-title>{{item.name}}</v-card-title>
                     <v-card-text>
-                        <p>Cost: {{item.cost}}</p>
+                        <p>Cost: {{Math.round(item.cost)}}</p>
                         <p>Click value: {{item.clickValue}}</p>
                         <p>Time to click: {{item.clickTime}} second(s)</p>
                         <p>Purchased: {{item.total}}</p>
