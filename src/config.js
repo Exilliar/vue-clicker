@@ -55,6 +55,28 @@ var config = {
       cost: 20,
       disabled: false,
       total: 0,
+    }, {
+      id: 2,
+      name: "Item 2 upgrade",
+      description: "Upgrades the clicks per second for Item 2 by 1",
+      increase: 2,
+      upgradeId: 1, // -1 for cursor
+      unlocked: true,
+      limit: 9, // how many times the upgrade can be bought
+      cost: 40,
+      disabled: false,
+      total: 0,
+    }, {
+      id: 3,
+      name: "Item 3 upgrade",
+      description: "Upgrades the clicks per second for Item 3 by 1",
+      increase: 4,
+      upgradeId: 2, // -1 for cursor
+      unlocked: true,
+      limit: 9, // how many times the upgrade can be bought
+      cost: 80,
+      disabled: false,
+      total: 0,
     }]
 }
 
