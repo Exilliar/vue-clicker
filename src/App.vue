@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      clicks: 90,
+      clicks: 0,
       cps: 0, // clicks per second
       items: config.items,
       upgrades: config.upgrades,
