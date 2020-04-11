@@ -7,7 +7,8 @@
       height="15em"
       width="15em"
       @click="handleClick()"
-    >Click this button!</v-btn>
+      >Click this button!</v-btn
+    >
   </v-container>
 </template>
 
@@ -15,9 +16,11 @@
 export default {
   name: 'MainButton',
   methods: {
-    handleClick() { this.$emit('clicked'); }
+    handleClick() {
+      this.$emit('clicked');
+    }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

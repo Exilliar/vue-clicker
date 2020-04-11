@@ -11,8 +11,8 @@
         </v-col>
         <v-col cols="4" class="text-center">
           <div id="main-content" class="page">
-            <score :clicks="clicks" :cps="cps"/>
-            <main-button @clicked="onMainButtonClick()"/>
+            <score :clicks="clicks" :cps="cps" />
+            <main-button @clicked="onMainButtonClick()" />
           </div>
         </v-col>
         <v-col cols="4" style="height:100vh" class="overflow-y-auto">
@@ -40,7 +40,7 @@ export default {
     Score,
     MainButton,
     ItemShop,
-    UpgradeShop,
+    UpgradeShop
   },
   data() {
     return {
@@ -51,7 +51,7 @@ export default {
       cpsIntervalID: -1,
       mainButtonClickValue: 1, //clicks per manual click
       purchasedItems: []
-    }
+    };
   },
   methods: {
     onMainButtonClick() {
@@ -59,7 +59,7 @@ export default {
     },
     purchaseItem(item) {
       if (this.clicks >= item.cost) {
-        item.total ++;
+        item.total++;
 
         this.clicks -= item.cost;
         this.purchasedItems.push(item);
@@ -73,29 +73,32 @@ export default {
     unlockItems() {
       this.items.forEach((item, i) => {
         if (i != 0) {
-          if (this.items[i-1].total >= item.unlockAt) {
+          if (this.items[i - 1].total >= item.unlockAt) {
             item.unlocked = true;
-            this.upgrades[i+1].unlocked = true;
+            this.upgrades[i + 1].unlocked = true;
           }
         }
       });
     },
     purchaseUpgrade(upgrade) {
-      upgrade.total ++;
+      upgrade.total++;
       upgrade.disabled = upgrade.total >= upgrade.limit;
 
       this.clicks -= upgrade.cost;
 
       this.updatePrice(upgrade);
 
-      if (upgrade.upgradeId === -1) this.mainButtonClickValue += upgrade.increase;
+      if (upgrade.upgradeId === -1)
+        this.mainButtonClickValue += upgrade.increase;
       else {
         this.items[upgrade.upgradeId].clickValue += upgrade.increase;
         this.updateCps();
       }
     },
     updateCps() {
-      this.cps = this.purchasedItems.map(i => i.clickValue/i.clickTime).reduce((a,b) => a + b, 0);
+      this.cps = this.purchasedItems
+        .map(i => i.clickValue / i.clickTime)
+        .reduce((a, b) => a + b, 0);
 
       this.updateClicks();
     },
@@ -103,7 +106,7 @@ export default {
       if (this.cpsIntervalID !== -1) window.clearInterval(this.cpsIntervalID);
       if (this.cps === 0) return;
 
-      let time = 1000/this.cps;
+      let time = 1000 / this.cps;
 
       const minTime = 10;
 
@@ -111,7 +114,7 @@ export default {
 
       if (time < minTime) {
         time = minTime;
-        addClicks = this.cps/100;
+        addClicks = this.cps / 100;
       } else addClicks = 1;
 
       this.cpsIntervalID = window.setInterval(() => {
@@ -122,6 +125,5 @@ export default {
       object.cost *= object.increaseMulti;
     }
   }
-}
+};
 </script>
-

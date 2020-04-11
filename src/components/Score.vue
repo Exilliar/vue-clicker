@@ -1,7 +1,22 @@
 <template>
   <v-content>
-    <p>Clicked {{ Math.round(clicks).toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",") }} times</p>
-    <p>per second: {{Math.round(cps).toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",")}}</p>
+    <p>
+      Clicked
+      {{
+        Math.round(clicks)
+          .toString()
+          .replace(/\B(?=(?:\d{3})+(?!\d))/g, ',')
+      }}
+      times
+    </p>
+    <p>
+      per second:
+      {{
+        Math.round(cps)
+          .toString()
+          .replace(/\B(?=(?:\d{3})+(?!\d))/g, ',')
+      }}
+    </p>
   </v-content>
 </template>
 
@@ -12,9 +27,8 @@ export default {
     clicks: Number,
     cps: Number
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>
