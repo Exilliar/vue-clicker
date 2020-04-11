@@ -68,12 +68,15 @@ export default {
         this.updatePrice(item);
 
         this.unlockItems();
-      } else console.log("Cannot afford");
+      }
     },
     unlockItems() {
       this.items.forEach((item, i) => {
         if (i != 0) {
-          if (this.items[i-1].total >= item.unlockAt) item.unlocked = true;
+          if (this.items[i-1].total >= item.unlockAt) {
+            item.unlocked = true;
+            this.upgrades[i+1].unlocked = true;
+          }
         }
       });
     },
