@@ -78,7 +78,7 @@ var config = {
       description: "Upgrades the clicks per second for Item 3 by 4",
       increase: 4,
       upgradeId: 2, // -1 for cursor
-      unlocked: true,
+      unlocked: false,
       limit: 9, // how many times the upgrade can be bought
       cost: 80,
       disabled: false,
