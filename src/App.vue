@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      clicks: 0,
+      clicks: 7578787,
       cps: 0, // clicks per second
       items: config.items,
       upgrades: config.upgrades,
@@ -57,18 +57,18 @@ export default {
     onMainButtonClick() {
       this.clicks += this.mainButtonClickValue;
     },
-    purchaseItem(item) {
-      if (this.clicks >= item.cost) {
-        item.total++;
+    purchaseItem(item, totalCost) {
+      item.total += item.buyNumber;
 
-        this.clicks -= item.cost;
-        this.purchasedItems.push(item);
-        this.updateCps();
+      this.clicks -= totalCost;
 
-        this.updatePrice(item);
+      for (let i = 0; i < item.buyNumber; i++) this.purchasedItems.push(item);
 
-        this.unlockItems();
-      }
+      this.updateCps();
+
+      this.updatePrice(item);
+
+      this.unlockItems();
     },
     unlockItems() {
       this.items.forEach((item, i) => {
