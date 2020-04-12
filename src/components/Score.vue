@@ -2,20 +2,12 @@
   <v-content>
     <p>
       Clicked
-      {{
-        Math.round(clicks)
-          .toString()
-          .replace(/\B(?=(?:\d{3})+(?!\d))/g, ',')
-      }}
+      {{ displayClicks }}
       times
     </p>
     <p>
       per second:
-      {{
-        Math.round(cps)
-          .toString()
-          .replace(/\B(?=(?:\d{3})+(?!\d))/g, ',')
-      }}
+      {{ displayCps }}
     </p>
   </v-content>
 </template>
@@ -26,6 +18,18 @@ export default {
   props: {
     clicks: Number,
     cps: Number
+  },
+  computed: {
+    displayClicks() {
+      return Math.round(this.clicks)
+        .toString()
+        .replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
+    },
+    displayCps() {
+      return Math.round(this.cps)
+        .toString()
+        .replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
+    }
   }
 };
 </script>
