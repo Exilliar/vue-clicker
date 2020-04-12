@@ -11,7 +11,8 @@ var config = {
       unlocked: true,
       unlockAt: 0,
       intervalID: undefined,
-      increaseMulti: 1.1 // How much the price increases (multiply) by on each purchase
+      increaseMulti: 1.1, // How much the price increases (multiply) by on each purchase
+      buyNumber: 1 // The number that the user buys at one time (can be changed by the user)
     },
     {
       id: 1,
@@ -24,7 +25,8 @@ var config = {
       unlocked: true,
       unlockAt: 0,
       intervalID: undefined,
-      increaseMulti: 1.1
+      increaseMulti: 1.1,
+      buyNumber: 1
     },
     {
       id: 2,
@@ -37,7 +39,8 @@ var config = {
       unlocked: false,
       unlockAt: 5, // the number of the previous item required before this item is unlocked
       intervalID: undefined,
-      increaseMulti: 1.1
+      increaseMulti: 1.1,
+      buyNumber: 1
     }
   ],
   upgrades: [
