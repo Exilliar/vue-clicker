@@ -1,26 +1,30 @@
 <template>
   <v-content>
-    <h1 class="text-center">Item Shop</h1>
-    <div v-if="items">
-      <template v-for="item in items">
-        <item-card
-          :key="item.id"
-          :item="item"
-          :clicks="clicks"
-          @purchaseItem="purchaseItem"
-        />
-      </template>
-    </div>
+    <!-- <shop-header :title="'Item Shop'" /> -->
+    <shop-header :title="'Item Shop'">
+      <div v-if="items">
+        <template v-for="item in items">
+          <item-card
+            :key="item.id"
+            :item="item"
+            :clicks="clicks"
+            @purchaseItem="purchaseItem"
+          />
+        </template>
+      </div>
+    </shop-header>
   </v-content>
 </template>
 
 <script>
+import ShopHeader from './ShopHeader.vue';
 import ItemCard from './ItemCard.vue';
 
 export default {
   name: 'ItemShop',
   components: {
-    ItemCard
+    ItemCard,
+    ShopHeader
   },
   props: {
     items: Array,

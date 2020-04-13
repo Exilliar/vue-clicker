@@ -12,7 +12,7 @@ var config = {
       unlockAt: 0,
       intervalID: undefined,
       increaseMulti: 1.1, // How much the price increases (multiply) by on each purchase
-      buyNumber: 1 // The number that the user buys at one time (can be changed by the user)
+      buyNumber: 1 // The number that the user buys at one time (can be changed by the user), must be either 1, 10 or 100
     },
     {
       id: 1,
