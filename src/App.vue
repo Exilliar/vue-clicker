@@ -62,11 +62,13 @@ export default {
 
       this.clicks -= totalCost;
 
-      for (let i = 0; i < item.buyNumber; i++) this.purchasedItems.push(item);
+      for (let i = 0; i < item.buyNumber; i++) {
+        this.purchasedItems.push(item);
+      }
 
       this.updateCps();
 
-      this.updatePrice(item);
+      this.updatePrice(item, item.buyNumber);
 
       this.unlockItems();
     },
@@ -86,7 +88,7 @@ export default {
 
       this.clicks -= upgrade.cost;
 
-      this.updatePrice(upgrade);
+      this.updatePrice(upgrade, 1);
 
       if (upgrade.upgradeId === -1)
         this.mainButtonClickValue += upgrade.increase;
@@ -121,8 +123,8 @@ export default {
         this.clicks += addClicks;
       }, time);
     },
-    updatePrice(object) {
-      object.cost *= object.increaseMulti;
+    updatePrice(object, buyNumber) {
+      object.cost *= Math.pow(object.increaseMulti, buyNumber);
     }
   }
 };
