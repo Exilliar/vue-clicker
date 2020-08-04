@@ -45,7 +45,7 @@ This file contains the `items` object which contains (surprisingly) the items th
 
 ### Components
 
-A component is a chunk of html, css and js that is called in the html of view/container. Think of it like a function in java/c#, it should be as small as possible and idealy only do one thing.
+A component is a chunk of html, css and js that is called in the html of view/container. Think of it like a class in java/c#, it should be as small as possible and idealy only do one thing.
 
 Components will often have outputs and inputs. In vue the inputs are put into the `props` part of the component. Outputs are sent using the `emit` method
 
